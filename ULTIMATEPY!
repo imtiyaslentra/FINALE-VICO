@@ -1009,7 +1009,8 @@ local Tabs = {
 
 -- Toggle for Auto Parry
 local AutoParryToggle = Tabs.Main:AddToggle("Auto Parry", {
-    Title = "• Auto parry that legit maybe can be Op Main Parry",
+    Title = "Auto Parry",
+    Description = "• Auto parry that legit maybe can be Op Main Parry",
     Default = false,
 })
 
@@ -1019,7 +1020,8 @@ end)
 
 -- Toggle for Visualizer
 local VisualizerToggle = Tabs.Main:AddToggle("Visualizer", {
-    Title = "• here to View Part of parry and spam ",
+    Title = "Visualizer",
+    Description = "• here to View Part of parry and spam",
     Default = false,
 })
 
@@ -1029,7 +1031,8 @@ end)
 
 -- Toggle for Auto Spam
 local AutoSpamToggle = Tabs.Main:AddToggle("Auto Spam", {
-    Title = "• This Will help you when Autospam detected Spam",
+    Title = "Auto Spam",
+    Description = "• This Will help you when Autospam detected Spam",
     Default = false,
 })
 
@@ -1039,7 +1042,8 @@ end)
 
 -- Toggle for Manual Spam
 local ManualSpamToggle = Tabs.Main:AddToggle("Manual Spam", {
-    Title = "• Help you to Spam Speed with Manual Spam",
+    Title = "Manual Spam",
+    Description = "• Help you to Spam Speed with Manual Spam",
     Default = false,
 })
 
@@ -1052,7 +1056,8 @@ ManualSpamToggle:OnChanged(function(state)
 end)
 
 local AutoCurveToggle = Tabs.SettingsParry:AddToggle("Auto Curve", {
-    Title = "• Turn the ball in a curved way with the auto curve method!",
+    Title = "Auto Curve",
+    Description = "• Turn the ball in a curved way with the auto curve method!",
     Default = false,
 })
 
@@ -1061,7 +1066,8 @@ AutoCurveToggle:OnChanged(function(state)
 end)
 
 local AntiCurveToggle = Tabs.SettingsParry:AddToggle("Anti Curve", {
-    Title = "• This is help when the ball Is going curve Sunddenly!",
+    Title = "Anti Curve",
+    Description = "• This is help when the ball Is going curve Sunddenly!",
     Default = false,
 })
 
@@ -1070,7 +1076,8 @@ AntiCurveToggle:OnChanged(function(state)
 end)
 
 local AiWalkToggle = Tabs.SettingsParry:AddToggle("Ai Walk", {
-    Title = "• Ai Walk This is for those who are lazy about walking but AI Walk helps",
+    Title = "Ai Walk",
+    Description = "• Ai Walk This is for those who are lazy about walking but AI Walk helps",
     Default = false,
 })
 
@@ -1079,7 +1086,8 @@ AiWalkToggle:OnChanged(function(state)
 end)
 
 local RageFarmToggle = Tabs.SettingsParry:AddToggle("G FARM", {
-    Title = "• This is Rage Farmings! Which is...",
+    Title = "G FARM",
+    Description = "• This is Rage Farmings! Which is...",
     Default = false,
 })
 
@@ -1088,7 +1096,8 @@ RageFarmToggle:OnChanged(function(state)
 end)
 
 local TpHitToggle = Tabs.SettingsParry:AddToggle("Teleport Hit (Soon)", {
-    Title = "• TP still in development stage and not yet",
+    Title = "Teleport Hit",
+    Description = "• TP still in development stage and not yet",
     Default = false,
 })
 
@@ -1122,7 +1131,7 @@ ImageButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 ImageButton.BorderSizePixel = 0
 ImageButton.Position = UDim2.new(0.120833337, 0, 0.0952890813, 0)
 ImageButton.Size = UDim2.new(0, 50, 0, 50)
-ImageButton.Image = "rbxassetid://83582647628443" -- Set image using decal ID
+ImageButton.Image = "rbxassetid://83582647628443" -- Pastikan ID gambar benar
 ImageButton.Draggable = true
 
 -- Add UICorner for rounded corners
