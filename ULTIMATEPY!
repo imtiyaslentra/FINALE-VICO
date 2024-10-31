@@ -984,154 +984,345 @@ end)
 --// Services
 local UserInputService = game:GetService("UserInputService");
 
---// Library
-print("all right reserved! Credit To Rudert")
-
-local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
-local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
-local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
-
-local Window = Fluent:CreateWindow({
-    Title = "Vico Hub!",
-    SubTitle = "Vico Hub is always evolving",
-    TabWidth = 160,
-    Size = UDim2.fromOffset(580, 460),
-    Acrylic = true,
-    Theme = "Light",
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/lxte/lates-lib/main/Main.lua"))()
+local Window = Library:CreateWindow({
+	Title = "Z Scripts - ",
+	Theme = "Dark",
+	
+	Size = UDim2.fromOffset(570, 370),
+	Transparency = 0.2,
+	Blurring = true,
+	MinimizeKeybind = Enum.KeyCode.LeftAlt,
 })
 
--- Create Main Tab
-local Tabs = {
-    Main = Window:AddTab({ Title = "Main", Icon = "home" }),
-    SettingsParry = Window:AddTab({ Title = "Set Parry/Any", Icon = "wrench" }),
-    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
+local Themes = {
+	Light = {
+		--// Frames:
+		Primary = Color3.fromRGB(232, 232, 232),
+		Secondary = Color3.fromRGB(255, 255, 255),
+		Component = Color3.fromRGB(245, 245, 245),
+		Interactables = Color3.fromRGB(235, 235, 235),
+
+		--// Text:
+		Tab = Color3.fromRGB(50, 50, 50),
+		Title = Color3.fromRGB(0, 0, 0),
+		Description = Color3.fromRGB(100, 100, 100),
+
+		--// Outlines:
+		Shadow = Color3.fromRGB(255, 255, 255),
+		Outline = Color3.fromRGB(210, 210, 210),
+
+		--// Image:
+		Icon = Color3.fromRGB(100, 100, 100),
+	},
+	
+	Dark = {
+		--// Frames:
+		Primary = Color3.fromRGB(30, 30, 30),
+		Secondary = Color3.fromRGB(35, 35, 35),
+		Component = Color3.fromRGB(40, 40, 40),
+		Interactables = Color3.fromRGB(45, 45, 45),
+
+		--// Text:
+		Tab = Color3.fromRGB(200, 200, 200),
+		Title = Color3.fromRGB(240,240,240),
+		Description = Color3.fromRGB(200,200,200),
+
+		--// Outlines:
+		Shadow = Color3.fromRGB(0, 0, 0),
+		Outline = Color3.fromRGB(40, 40, 40),
+
+		--// Image:
+		Icon = Color3.fromRGB(220, 220, 220),
+	},
+	
+	Void = {
+		--// Frames:
+		Primary = Color3.fromRGB(15, 15, 15),
+		Secondary = Color3.fromRGB(20, 20, 20),
+		Component = Color3.fromRGB(25, 25, 25),
+		Interactables = Color3.fromRGB(30, 30, 30),
+
+		--// Text:
+		Tab = Color3.fromRGB(200, 200, 200),
+		Title = Color3.fromRGB(240,240,240),
+		Description = Color3.fromRGB(200,200,200),
+
+		--// Outlines:
+		Shadow = Color3.fromRGB(0, 0, 0),
+		Outline = Color3.fromRGB(40, 40, 40),
+
+		--// Image:
+		Icon = Color3.fromRGB(220, 220, 220),
+	},
+
 }
 
--- Toggle for Auto Parry
-local AutoParryToggle = Tabs.Main:AddToggle("Auto Parry", {
-    Title = "Auto Parry",
-    Description = "• Auto parry that legit maybe can be Op Main Parry",
-    Default = false,
+--// Set the default theme
+Window:SetTheme(Themes.Dark)
+
+--// Sections
+Window:AddTabSection({
+	Name = "Main",
+	Order = 1,
 })
 
-AutoParryToggle:OnChanged(function(state)
-    aura_Enabled = state
-end)
+--// Tab [MAIN]
 
--- Toggle for Visualizer
-local VisualizerToggle = Tabs.Main:AddToggle("Visualizer", {
-    Title = "Visualizer",
-    Description = "• here to View Part of parry and spam",
-    Default = false,
+local AAA = Window:AddTab({
+	Title = "Info",
+	Section = "Vico Hub",
+	Icon = "rbxassetid://11963373994"
 })
 
-VisualizerToggle:OnChanged(function(state)
-    visualize_Enabled = state
-end)
+Window:AddSection({ Name = "Information", Tab = AAA }) 
 
--- Toggle for Auto Spam
-local AutoSpamToggle = Tabs.Main:AddToggle("Auto Spam", {
-    Title = "Auto Spam",
-    Description = "• This Will help you when Autospam detected Spam",
-    Default = false,
+
+Window:AddParagraph({
+	Title = "Vico - Blade ball",
+	Description = "Be careful Vico will grow",
+	Tab = AAA
+})
+				
+	Window:AddParagraph({
+	Title = "Vico Credit",
+	Description = "Rudert",
+	Tab = AAA
+})		
+
+Window:AddToggle({
+	Title = "Copy Discord Link!",
+	Description = "https://discord.gg/EwARkGncq4",
+	Tab = AAA,
+	Callback = function()
+		setclipboard("https://discord.gg/EwARkGncq4")
+	end,
+}) 
+
+Window:AddToggle({
+	Title = "Copy Youtube Link!",
+	Description = "https://youtube.com/@starx575",
+	Tab = AAA,
+	Callback = function()
+		setclipboard("https://youtube.com/@starx575")
+	end,
+}) 
+
+--Teleport
+local TeleportService = game:GetService("TeleportService")
+
+local placeId = 121501154939356
+
+Window:AddToggle({
+	Title = "Just Nothing here",
+	Description = "- Cel -",
+	Tab = AAA,
+	Callback = function()
+		local player = game.Players.LocalPlayer
+		if player then
+			TeleportService:Teleport(placeId, player)
+		end
+	end,
+}) 
+				
+local Main = Window:AddTab({
+	Title = "Main",
+	Section = "Main",
+	Icon = "rbxassetid://11963373994"
+})
+				
+Window:AddSection({ Name = "Autoparry", Tab = Main }) 
+
+
+Window:AddToggle({
+	Title = "Autoparry",
+	Description = "Parrys the ball [100% accuracy]",
+	Tab = Main,
+	Callback = function(state)
+	aura_Enabled = state
+
+	end,
+}) 
+
+Window:AddToggle({
+	Title = "Autospam",
+	Description = "Toggles Autospam when near player(only works on clash)",
+	Tab = Main,
+	Callback = function(state)
+	
+		auto_spam = state
+	end,
+}) 
+				
+Window:AddToggle({
+	Title = "Manual spam",
+	Description = "A back-up for the Auto spam",
+	Tab = Main,
+	Callback = function(state)
+		           if state then
+            ManualSpam()
+            else 
+            ManualSpam()
+            end
+	end,
+}) 	
+			
+Window:AddSection({ Name = "Parry Misc", Tab = Main }) 
+	
+		Window:AddToggle({
+	Title = "Auto Curve",
+	Description = "Auto Curves the ball",
+	Tab = Main,
+	Callback = function(state)
+	auto_curve = state
+
+	end,
+})
+				
+		Window:AddToggle({
+	Title = "Anti Spam Curve",
+	Description = "When spamming it cancels out the Curve",
+	Tab = Main,
+	Callback = function(state)
+anti_curve_spam_Enabled = state
+	end,
+})				
+	Window:AddToggle({
+	Title = "Standalone Mode",
+	Description = "It Increase The Auto Spam Sensitivity",
+	Tab = Main,
+	Callback = function(state)
+standalone = state
+	end,
+})			
+
+				Window:AddSection({ Name = "Autofarms", Tab = Main }) 
+	
+Window:AddToggle({
+	Title = "Autofarm",
+	Description = "Autofarms the game not 100% win rate",
+	Tab = Main,
+	Callback = function(state)
+auto_win = state
+	end,
+})								
+				
+	Window:AddToggle({
+	Title = "Ai play",
+	Description = "Auto plays the game, may not work mody of the timed(turn on autoparry)",
+	Tab = Main,
+	Callback = function(state)
+ai_Enabled = state
+	end,
+})										
+				
+	Window:AddToggle({
+	Title = "TP Hit",
+	Description = "Tp when ball is coming or targeting you",
+	Tab = Main,
+	Callback = function(state)
+tp_hit = state
+	end,
+})												
+				
+				
+				Window:AddSection({ Name = "Debug", Tab = Main }) 
+	
+				Window:AddToggle({
+	Title = "View Parry Part",
+	Description = "Shows the parry range",
+	Tab = Main,
+	Callback = function(state)
+visualize_Enabled = state
+	end,
+})										
+				
+--// Tab [SETTINGS]
+local Keybind = nil
+local Settings = Window:AddTab({
+	Title = "Settings",
+	Section = "Settings",
+	Icon = "rbxassetid://11293977610",
 })
 
-AutoSpamToggle:OnChanged(function(state)
-    auto_spam = state
-end)
 
--- Toggle for Manual Spam
-local ManualSpamToggle = Tabs.Main:AddToggle("Manual Spam", {
-    Title = "Manual Spam",
-    Description = "• Help you to Spam Speed with Manual Spam",
-    Default = false,
+Window:AddDropdown({
+	Title = "Set Theme",
+	Description = "Set the theme of the library!",
+	Tab = Settings,
+	Options = {
+		["Light Mode"] = "Light",
+		["Dark Mode"] = "Dark",
+		["Extra Dark"] = "Void",
+	},
+	Callback = function(Theme) 
+		Window:SetTheme(Themes[Theme])
+	end,
+}) 
+
+Window:AddToggle({
+	Title = "UI Blur",
+	Description = "If enabled, must have your Roblox graphics set to 8+ for it to work",
+	Default = true,
+	Tab = Settings,
+	Callback = function(Boolean) 
+		Window:SetSetting("Blur", Boolean)
+	end,
+}) 
+
+
+Window:AddSlider({
+	Title = "UI Transparency",
+	Description = "Set the transparency of the UI(0.15 recommend)",
+	Tab = Settings,
+	AllowDecimals = true,
+	MaxValue = 1,
+	Callback = function(Amount) 
+		Window:SetSetting("Transparency", Amount)
+	end,
+}) 
+
+Window:Notify({
+	Title = "Please Join Fade New Server: https://discord.com/invite/EwARkGncq4",
+	Description = "Press Left Alt or The Image To Minimize The Window.", 
+	Duration = 10
 })
+local notificationShown = true  -- Flag to track if the notification has been shown
 
-ManualSpamToggle:OnChanged(function(state)
-    if state then
-        ManualSpam()
-    else 
-        ManualSpam()
+-- Function to repeatedly check if aura_table.is_Spamming
+local function checkSpamming()
+    while true do  -- Infinite loop to keep checking
+        if ismyautoparryspamming and not notificationShown then
+            Window:Notify({
+                Title = "Spamming",
+                Description = "", 
+                Duration = 2
+            })
+            notificationShown = true  -- Set the flag to true after showing the notification
+        elseif not aura_table.is_Spamming then
+            notificationShown = false  -- Reset the flag when not spamming
+        end
+        wait(0.5)  -- Wait for 1 second before checking again (adjust as needed)
     end
-end)
+end
 
-local AutoCurveToggle = Tabs.SettingsParry:AddToggle("Auto Curve", {
-    Title = "Auto Curve",
-    Description = "• Turn the ball in a curved way with the auto curve method!",
-    Default = false,
-})
-
-AutoCurveToggle:OnChanged(function(state)
-    auto_curve = state
-end)
-
-local AntiCurveToggle = Tabs.SettingsParry:AddToggle("Anti Curve", {
-    Title = "Anti Curve",
-    Description = "• This is help when the ball Is going curve Sunddenly!",
-    Default = false,
-})
-
-AntiCurveToggle:OnChanged(function(state)
-    anti_curve_spam_Enabled = state
-end)
-
-local AiWalkToggle = Tabs.SettingsParry:AddToggle("Ai Walk", {
-    Title = "Ai Walk",
-    Description = "• Ai Walk This is for those who are lazy about walking but AI Walk helps",
-    Default = false,
-})
-
-AiWalkToggle:OnChanged(function(state)
-    ai_Enabled = state
-end)
-
-local RageFarmToggle = Tabs.SettingsParry:AddToggle("G FARM", {
-    Title = "G FARM",
-    Description = "• This is Rage Farmings! Which is...",
-    Default = false,
-})
-
-RageFarmToggle:OnChanged(function(state)
-    auto_win = state
-end)
-
-local TpHitToggle = Tabs.SettingsParry:AddToggle("Teleport Hit (Soon)", {
-    Title = "Teleport Hit",
-    Description = "• TP still in development stage and not yet",
-    Default = false,
-})
-
-TpHitToggle:OnChanged(function(state)
-    tp_hit_enabled = state
-end)
-
-Tabs.Settings:AddButton({
-    Title = "View Console",
-    Description = "Click Console to see it",
-    Callback = function()
-        game.StarterGui:SetCore("DevConsoleVisible", true)
-        wait()
-    end
-})
-
--- Open the GUI window
-Window:Open()
-
--- Setup for ScreenGui to include ImageButton
+-- Start the check in a new thread
+spawn(checkSpamming)
 local ScreenGui = Instance.new("ScreenGui")
 local ImageButton = Instance.new("ImageButton")
 local UICorner = Instance.new("UICorner")
 
+-- Configure the ScreenGui
 ScreenGui.Parent = game.CoreGui
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
--- Configure ImageButton
+-- Configure the ImageButton
 ImageButton.Parent = ScreenGui
 ImageButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 ImageButton.BorderSizePixel = 0
 ImageButton.Position = UDim2.new(0.120833337, 0, 0.0952890813, 0)
 ImageButton.Size = UDim2.new(0, 50, 0, 50)
-ImageButton.Image = "rbxassetid://83582647628443" -- Pastikan ID gambar benar
+ImageButton.Image = "rbxassetid://15302652530" -- Set the image using the decal ID
 ImageButton.Draggable = true
 
 -- Add UICorner for rounded corners
@@ -1139,5 +1330,9 @@ UICorner.Parent = ImageButton
 
 -- Function to handle click event
 ImageButton.MouseButton1Click:Connect(function()
-    game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.End, false, game)
+    game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.LeftAlt, false, game)
 end)
+print("Loading Succesful!")
+
+--Execute Checker  
+loadstring(game:HttpGet("https://raw.githubusercontent.com/StarX-exploit/executed/refs/heads/main/exe.lua"))()
