@@ -1,4 +1,4 @@
-print("load the script")
+print("load the script!!")
 wait(2)
 print("script is running wait")
 wait(1)
