@@ -900,7 +900,7 @@ autoparryvar = RunService.Heartbeat:Connect(function()
 
 local enemy_Velocity_Toward_Player = (closest_Entity.HumanoidRootPart.Position - local_player.Character.HumanoidRootPart.Position).Unit:Dot(target_Velocity.Unit)
 if enemy_Velocity_Toward_Player > 0.3 then
-    aura_table.is_Spamming = ...
+    aura_table.is_Spamming
 end
 
     task.spawn(function()
