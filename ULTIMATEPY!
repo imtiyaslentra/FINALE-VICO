@@ -1299,7 +1299,7 @@ Window:AddSlider({
 }) 
 
 Window:Notify({
-	Title = "Please Join Fade New Server: https://discord.com/invite/EwARkGncq4",
+	Title = "hey How about my script? hope you're not bored :)",
 	Description = "Press Left Alt or The Image To Minimize The Window.", 
 	Duration = 10
 })
@@ -1311,8 +1311,8 @@ local function checkSpamming()
         if ismyautoparryspamming and not notificationShown then
             Window:Notify({
                 Title = "Detected Spam",
-                Description = "spam will be active because it has been fulfilled", 
-                Duration = 2
+                Description = "spam will be active because it has been fulfilled.", 
+                Duration = 3
             })
             notificationShown = true  -- Set the flag to true after showing the notification
         elseif not aura_table.is_Spamming then
