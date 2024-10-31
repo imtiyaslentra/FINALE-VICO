@@ -804,34 +804,29 @@ task.spawn(function()
             local distanceToEntity = local_player:DistanceFromCharacter(entityPosition)
 
             if distanceToEntity <= aura_table.spam_Range then
-                ismyautoparryspamming = true
+            ismyautoparryspamming = true
 
-local cf = camera.CFrame
-local direction = (entityPosition - playerPosition).Unit
-local offset = Vector3.new(math.random(-50, 50), math.random(-10, 10), math.random(-50, 50))
-local randomTarget = entityPosition + direction * 50 + offset
-local targetPosition = closest_Entity_To_mouse.HumanoidRootPart.Position
-local fireArgs = {
-    {[closest_Entity_To_mouse.Name] = targetPosition},
-    {targetPosition.X, targetPosition.Y}
-}
+if camera and closest_Entity_To_mouse then
+    local cf = camera.CFrame
+    local direction = (entityPosition - playerPosition).Unit
+    local offset = Vector3.new(math.random(-50, 50), math.random(-10, 10), math.random(-50, 50))
+    local randomTarget = entityPosition + direction * 50 + offset
+    local targetPosition = closest_Entity_To_mouse.HumanoidRootPart.Position
+    local fireArgs = {
+        {[closest_Entity_To_mouse.Name] = targetPosition},
+        {targetPosition.X, targetPosition.Y}
+    }
 
-task.defer(function()
-    for count = 1, potanum do
-        if auto_curve then
-            originalParryRemote:FireServer(0, CFrame.new(cf.Position, randomTarget), unpack(fireArgs))
-        else
-            originalParryRemote:FireServer(0, cf, unpack(fireArgs))
+    task.defer(function()
+        for count = 1, potanum do
+            if auto_curve then
+                originalParryRemote:FireServer(0, CFrame.new(cf.Position, randomTarget), unpack(fireArgs))
+            else
+                originalParryRemote:FireServer(0, cf, unpack(fireArgs))
+            end
+            wait(0.01) -- Tambahkan jeda untuk menghindari spam yang berlebihan
         end
-        
-        -- Menghapus jeda untuk meningkatkan kecepatan spam
-        wait(0) -- Ini akan memungkinkan spam terjadi secepat mungkin
-    end
-end)
-
-else
-    ismyautoparryspamming = false
-end
+    end)
 else
     ismyautoparryspamming = false
 end
