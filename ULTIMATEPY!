@@ -425,24 +425,62 @@ local function HEUNEYP_fake_script() -- IndercanotTextBlah.ColorChangeScript
 		return closest_Entity
 	end
 
-	RunService.RenderStepped:Connect(function()
-		if is_Green and originalParryRemote then
-			local closest_Entity = getClosestEntity()
-			if closest_Entity then
-				local cf = camera.CFrame
-				local x, y, z, R00, R01, R02, R10, R11, R12, R20, R21, R22 = cf:GetComponents()
+local camera = game:GetService("Workspace").CurrentCamera -- Ensure camera is defined
+local targetRate = 1000 -- Desired rate in Hz
+local attempts = 0 -- Count attempts to limit repeat loop
+local maxAttempts = 10 -- Maximum attempts to prevent infinite loop
 
-				originalParryRemote:FireServer(
-					0,
-					CFrame.new(x, y, z, R00, R01, R02, R10, R11, R12, R20, R21, R22),
-					{[closest_Entity.Name] = closest_Entity.HumanoidRootPart.Position},
-					{closest_Entity.HumanoidRootPart.Position.X, closest_Entity.HumanoidRootPart.Position.Y},
-					false
-				)
-			end
-		end
-	end)
+RunService.RenderStepped:Connect(function()
+    if is_Green and originalParryRemote then
+        local closest_Entity = getClosestEntity()
 
+        if camera then
+            local cf = camera.CFrame
+            local x, y, z, R00, R01, R02, R10, R11, R12, R20, R21, R22 = cf:GetComponents()
+
+            repeat
+                attempts += 1 -- Increment attempts to avoid infinite loop
+                
+                -- Ensure closest_Entity_To_mouse is defined
+                if closest_Entity and closest_Entity:FindFirstChild("HumanoidRootPart") then
+                    for v = 1, 60 do -- Loop for fast spam
+                        originalParryRemote:FireServer(
+                            0,
+                            CFrame.new(x, y, z, R00, R01, R02, R10, R11, R12, R20, R21, R22),
+                            {[closest_Entity.Name] = closest_Entity.HumanoidRootPart.Position},
+                            {closest_Entity.HumanoidRootPart.Position.X, closest_Entity.HumanoidRootPart.Position.Y},
+                            false
+                        )
+                        wait(0.001) -- Adjust wait for faster spam, change as needed
+                    end
+                else
+                    -- Fallback logic to find a backup target
+                    local backupTarget = nil
+                    for _, potentialTarget in pairs(Players:GetPlayers()) do
+                        if potentialTarget ~= Player and potentialTarget.Character and potentialTarget.Character:FindFirstChild("HumanoidRootPart") then
+                            backupTarget = potentialTarget
+                            break -- Exit the loop once a backup target is found
+                        end
+                    end
+
+                    if backupTarget then
+                        local backupPosition = backupTarget.Character.HumanoidRootPart.Position
+                        for v = 1, 75 do -- Loop for fast spam
+                            originalParryRemote:FireServer(
+                                0,
+                                CFrame.new(x, y, z, R00, R01, R02, R10, R11, R12, R20, R21, R22),
+                                {[backupTarget.Name] = backupPosition},
+                                {backupPosition.X, backupPosition.Y},
+                                false
+                            )
+                            wait(0.001) -- Adjust wait for faster spam, change as needed
+                        end
+                    end
+                end
+            until attempts >= maxAttempts -- Limit attempts to prevent infinite loop
+        end
+    end
+end)
 	
 	end
 coroutine.wrap(HEUNEYP_fake_script)()
