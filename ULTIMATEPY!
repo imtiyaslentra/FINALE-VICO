@@ -431,7 +431,7 @@ local attempts = 0 -- Count attempts to limit repeat loop
 local maxAttempts = 10 -- Maximum attempts to prevent infinite loop
 
 RunService.RenderStepped:Connect(function()
-    if is_Green and originalParryRemote then
+    if originalParryRemote then
         local closest_Entity = getClosestEntity()
 
         if camera then
@@ -440,10 +440,15 @@ RunService.RenderStepped:Connect(function()
 
             repeat
                 attempts += 1 -- Increment attempts to avoid infinite loop
+
+                -- Check if is_Green is still true
+                if not is_Green then
+                    break -- Exit the loop if is_Green is false
+                end
                 
                 -- Ensure closest_Entity_To_mouse is defined
                 if closest_Entity and closest_Entity:FindFirstChild("HumanoidRootPart") then
-                    for v = 1, 60 do -- Loop for fast spam
+                    for v = 1, 75 do -- Loop for fast spam
                         originalParryRemote:FireServer(
                             0,
                             CFrame.new(x, y, z, R00, R01, R02, R10, R11, R12, R20, R21, R22),
