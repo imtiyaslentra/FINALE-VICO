@@ -1,3 +1,7 @@
+print("load the script")
+wait(2)
+print("script is running wait")
+wait(1)
 if _G.Ran == true then return end
 wait()
 _G.Ran = true
