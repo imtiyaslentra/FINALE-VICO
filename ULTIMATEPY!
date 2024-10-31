@@ -854,7 +854,7 @@ autoparryvar = RunService.Heartbeat:Connect(function()
     local ball_Dot = ball_Direction:Dot(ball_Velocity.Unit)
     local ball_Speed = ball_Velocity.Magnitude
 
-    -- Detección de la bola
+    -- Detect Ball
     local ball_properties = {}
     ball_properties.position = ball_Position
     ball_properties.velocity = ball_Velocity
@@ -890,12 +890,18 @@ autoparryvar = RunService.Heartbeat:Connect(function()
     local target_isMoving = target_Velocity.Magnitude > 0
     local target_Dot = target_isMoving and math.max(target_Direction:Dot(target_Velocity.Unit), 0)
 
-    aura_table.spam_Range = math.clamp(math.max(math.max(ping / 8.5, 15) + ball_Speed / 7.5, 8.4), 25, 1200)
-    speedFactor = 3 - (ping / 100)
+    aura_table.spam_Range = math.clamp(math.max(math.max(ping / 8.5, 15) + ball_Speed / 7.5, 8.4), 20, 600)
     speedFactorPingBased = 6.1 - (ping / 100)
     aura_table.parry_Range = math.max(math.max(ping, 3.5) + ball_Speed / speedFactor, speedFactorPingBased)
 
-    aura_table.is_Spamming = aura_table.hit_Count > 1 or (target_Distance <= aura_table.spam_Range and ball_Distance < 18 and ball_Speed > 8) and ball_Velocity.Y > -50 and ball_Dot > 0.15
+    aura_table.is_Spamming = aura_table.hit_Count > 1 or 
+    (target_Distance <= aura_table.spam_Range and ball_Distance < 18 and ball_Speed > 15) 
+    and ball_Velocity.Y > -30 and ball_Dot > 0.3
+
+local enemy_Velocity_Toward_Player = (closest_Entity.HumanoidRootPart.Position - local_player.Character.HumanoidRootPart.Position).Unit:Dot(target_Velocity.Unit)
+if enemy_Velocity_Toward_Player > 0.3 then
+    aura_table.is_Spamming = ...
+end
 
     task.spawn(function()
         if (tick() - aura_table.ball_Warping) >= 0.15 + target_distance_Limited - ball_speed_Limited or ball_Distance <= 10 then
@@ -912,7 +918,7 @@ autoparryvar = RunService.Heartbeat:Connect(function()
         aura_table.is_ball_Warping = true
     end)
 
-    -- Predecir la posición de la pelota
+    -- Predict Ball
     local predicted_ball_Position = linear_predict(ball_Position, ball_Position + ball_Velocity * (ping / 100), 0.5)
 
     if ball_Distance <= aura_table.parry_Range and not aura_table.is_ball_Warping and ball_Speed > 0 and ball_Dot > 0.1 then
@@ -1273,7 +1279,7 @@ Window:AddToggle({
 
 Window:AddSlider({
 	Title = "UI Transparency",
-	Description = "Set the transparency of the UI(0.15 recommend)",
+	Description = "Set the transparency of the UI(0.15/0.20 Recommended)",
 	Tab = Settings,
 	AllowDecimals = true,
 	MaxValue = 1,
@@ -1294,8 +1300,8 @@ local function checkSpamming()
     while true do  -- Infinite loop to keep checking
         if ismyautoparryspamming and not notificationShown then
             Window:Notify({
-                Title = "Spamming",
-                Description = "", 
+                Title = "Detected Spam",
+                Description = "spam will be active because it has been fulfilled", 
                 Duration = 2
             })
             notificationShown = true  -- Set the flag to true after showing the notification
