@@ -429,64 +429,59 @@ local function HEUNEYP_fake_script() -- IndercanotTextBlah.ColorChangeScript
 		return closest_Entity
 	end
 
-local camera = game:GetService("Workspace").CurrentCamera -- Ensure camera is defined
-local targetRate = 1000 -- Desired rate in Hz
-local attempts = 0 -- Count attempts to limit repeat loop
-local maxAttempts = 10 -- Maximum attempts to prevent infinite loop
+local camera = game:GetService("Workspace").CurrentCamera -- Pastikan kamera terdefinisi
+local targetRate = 1000 -- Kecepatan yang diinginkan dalam Hz
+local attempts = 0 -- Menghitung upaya untuk membatasi loop pengulangan
+local maxAttempts = 10 -- Maksimum upaya untuk mencegah loop tak terhingga
 
 RunService.RenderStepped:Connect(function()
     if originalParryRemote then
-        local closest_Entity = getClosestEntity()
+        local closest_Entity = getClosestEntity() -- Mendapatkan entitas terdekat
 
         if camera then
             local cf = camera.CFrame
             local x, y, z, R00, R01, R02, R10, R11, R12, R20, R21, R22 = cf:GetComponents()
 
-            repeat
-                attempts += 1 -- Increment attempts to avoid infinite loop
-
-                -- Check if is_Green is still true
+            -- Loop spam
+            for count = 1, 75 do -- Loop untuk spam cepat
+                -- Cek apakah is_Green masih true
                 if not is_Green then
-                    break -- Exit the loop if is_Green is false
+                    break -- Hentikan spam jika is_Green false
                 end
                 
-                -- Ensure closest_Entity_To_mouse is defined
+                -- Pastikan closest_Entity terdefinisi
                 if closest_Entity and closest_Entity:FindFirstChild("HumanoidRootPart") then
-                    for v = 1, 75 do -- Loop for fast spam
-                        originalParryRemote:FireServer(
-                            0,
-                            CFrame.new(x, y, z, R00, R01, R02, R10, R11, R12, R20, R21, R22),
-                            {[closest_Entity.Name] = closest_Entity.HumanoidRootPart.Position},
-                            {closest_Entity.HumanoidRootPart.Position.X, closest_Entity.HumanoidRootPart.Position.Y},
-                            false
-                        )
-                        wait(0.001) -- Adjust wait for faster spam, change as needed
-                    end
+                    originalParryRemote:FireServer(
+                        0,
+                        CFrame.new(x, y, z, R00, R01, R02, R10, R11, R12, R20, R21, R22),
+                        {[closest_Entity.Name] = closest_Entity.HumanoidRootPart.Position},
+                        {closest_Entity.HumanoidRootPart.Position.X, closest_Entity.HumanoidRootPart.Position.Y},
+                        false
+                    )
                 else
-                    -- Fallback logic to find a backup target
+                    -- Logika cadangan untuk mencari target cadangan
                     local backupTarget = nil
                     for _, potentialTarget in pairs(Players:GetPlayers()) do
                         if potentialTarget ~= Player and potentialTarget.Character and potentialTarget.Character:FindFirstChild("HumanoidRootPart") then
                             backupTarget = potentialTarget
-                            break -- Exit the loop once a backup target is found
+                            break -- Keluar dari loop setelah target cadangan ditemukan
                         end
                     end
 
                     if backupTarget then
                         local backupPosition = backupTarget.Character.HumanoidRootPart.Position
-                        for v = 1, 75 do -- Loop for fast spam
-                            originalParryRemote:FireServer(
-                                0,
-                                CFrame.new(x, y, z, R00, R01, R02, R10, R11, R12, R20, R21, R22),
-                                {[backupTarget.Name] = backupPosition},
-                                {backupPosition.X, backupPosition.Y},
-                                false
-                            )
-                            wait(0.001) -- Adjust wait for faster spam, change as needed
-                        end
+                        originalParryRemote:FireServer(
+                            0,
+                            CFrame.new(x, y, z, R00, R01, R02, R10, R11, R12, R20, R21, R22),
+                            {[backupTarget.Name] = backupPosition},
+                            {backupPosition.X, backupPosition.Y},
+                            false
+                        )
                     end
                 end
-            until attempts >= maxAttempts -- Limit attempts to prevent infinite loop
+                
+                wait(0.001) -- Atur waktu tunggu untuk spam yang lebih cepat, ubah sesuai kebutuhan
+            end
         end
     end
 end)
