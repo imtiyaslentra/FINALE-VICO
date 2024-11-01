@@ -1137,19 +1137,19 @@ Window:AddSection({ Name = "Information", Tab = AAA })
 
 
 Window:AddParagraph({
-	Title = "Vico - Blade ball",
+	Title = "🧏 Vico - Blade ball 💥",
 	Description = "Be careful Vico will grow",
 	Tab = AAA
 })
 				
 	Window:AddParagraph({
-	Title = "Vico Credit",
+	Title = "[] Vico Credit []",
 	Description = "Rudert",
 	Tab = AAA
 })		
 
 Window:AddToggle({
-	Title = "Copy Discord Link!",
+	Title = "Rudert Discord Link!",
 	Description = "https://discord.gg/EwARkGncq4",
 	Tab = AAA,
 	Callback = function()
@@ -1158,28 +1158,11 @@ Window:AddToggle({
 }) 
 
 Window:AddToggle({
-	Title = "Copy Youtube Link!",
+	Title = "Rudert Youtube Link!",
 	Description = "https://youtube.com/@starx575",
 	Tab = AAA,
 	Callback = function()
 		setclipboard("https://youtube.com/@starx575")
-	end,
-}) 
-
---Teleport
-local TeleportService = game:GetService("TeleportService")
-
-local placeId = 121501154939356
-
-Window:AddToggle({
-	Title = "Just Nothing here",
-	Description = "- Cel -",
-	Tab = AAA,
-	Callback = function()
-		local player = game.Players.LocalPlayer
-		if player then
-			TeleportService:Teleport(placeId, player)
-		end
 	end,
 }) 
 				
@@ -1193,8 +1176,8 @@ Window:AddSection({ Name = "Autoparry", Tab = Main })
 
 
 Window:AddToggle({
-	Title = "Autoparry",
-	Description = "Parrys the ball [100% accuracy]",
+	Title = "• Autoparry",
+	Description = "\/ Parrys the ball [Still build up but 90%] \/",
 	Tab = Main,
 	Callback = function(state)
 	aura_Enabled = state
@@ -1203,8 +1186,8 @@ Window:AddToggle({
 }) 
 
 Window:AddToggle({
-	Title = "Autospam",
-	Description = "Toggles Autospam when near player(only works on clash)",
+	Title = "• Autospam",
+	Description = "\/ Toggles Autospam when near player(only works on clash) /\",
 	Tab = Main,
 	Callback = function(state)
 	
@@ -1213,8 +1196,8 @@ Window:AddToggle({
 }) 
 				
 Window:AddToggle({
-	Title = "Manual spam",
-	Description = "A back-up for the Auto spam",
+	Title = "• Manual spam",
+	Description = "\/ A back-up for the Auto spam /\",
 	Tab = Main,
 	Callback = function(state)
 		           if state then
@@ -1228,8 +1211,8 @@ Window:AddToggle({
 Window:AddSection({ Name = "Parry Misc", Tab = Main }) 
 	
 		Window:AddToggle({
-	Title = "Auto Curve",
-	Description = "Auto Curves the ball",
+	Title = "• Auto Curve",
+	Description = "\/ Auto Curves the ball /\",
 	Tab = Main,
 	Callback = function(state)
 	auto_curve = state
@@ -1238,16 +1221,16 @@ Window:AddSection({ Name = "Parry Misc", Tab = Main })
 })
 				
 		Window:AddToggle({
-	Title = "Anti Spam Curve",
-	Description = "When spamming it cancels out the Curve",
+	Title = "• Anti Spam Curve",
+	Description = "\/ When spamming it cancels out the Curve /\",
 	Tab = Main,
 	Callback = function(state)
 anti_curve_spam_Enabled = state
 	end,
 })				
 	Window:AddToggle({
-	Title = "Standalone Mode",
-	Description = "It Increase The Auto Spam Sensitivity",
+	Title = "• Standalone Mode",
+	Description = "\/ It Increase The Auto Spam Sensitivity /\",
 	Tab = Main,
 	Callback = function(state)
 standalone = state
@@ -1257,8 +1240,8 @@ standalone = state
 				Window:AddSection({ Name = "Autofarms", Tab = Main }) 
 	
 Window:AddToggle({
-	Title = "Autofarm",
-	Description = "Autofarms the game not 100% win rate",
+	Title = "• Autofarm",
+	Description = "\/ Autofarms the game not 100% win rate \/",
 	Tab = Main,
 	Callback = function(state)
 auto_win = state
@@ -1266,8 +1249,8 @@ auto_win = state
 })								
 				
 	Window:AddToggle({
-	Title = "Ai play",
-	Description = "Auto plays the game, may not work mody of the timed(turn on autoparry)",
+	Title = "• Ai play",
+	Description = "\/ Auto plays the game, may not work mody of the timed(turn on autoparry) /\",
 	Tab = Main,
 	Callback = function(state)
 ai_Enabled = state
@@ -1275,8 +1258,8 @@ ai_Enabled = state
 })										
 				
 	Window:AddToggle({
-	Title = "TP Hit",
-	Description = "Tp when ball is coming or targeting you",
+	Title = "• TP Hit",
+	Description = "\/ Tp when ball is coming or targeting you /\",
 	Tab = Main,
 	Callback = function(state)
 tp_hit = state
@@ -1287,8 +1270,8 @@ tp_hit = state
 				Window:AddSection({ Name = "Debug", Tab = Main }) 
 	
 				Window:AddToggle({
-	Title = "View Parry Part",
-	Description = "Shows the parry range",
+	Title = "• Visualizer",
+	Description = "\/ Show Parry And Spam Range /\",
 	Tab = Main,
 	Callback = function(state)
 visualize_Enabled = state
@@ -1352,7 +1335,7 @@ local function checkSpamming()
     while true do  -- Infinite loop to keep checking
         if ismyautoparryspamming and not notificationShown then
             Window:Notify({
-                Title = "Detected Spam",
+                Title = "Detected Spam!?",
                 Description = "spam will be active because it has been fulfilled.", 
                 Duration = 3
             })
@@ -1393,7 +1376,7 @@ end)
 print("Loading Succesful!")
 wait(1)
 print("Credit To Rudert")
-wait(2)
+wait(1)
 print("This Is Gonna Blow Up 💥😹")
 
 --Execute Checker  
