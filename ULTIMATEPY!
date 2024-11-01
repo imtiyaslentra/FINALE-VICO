@@ -1,4 +1,4 @@
-print("load the script!! 🤓😎")
+print("load the script!! 😻")
 wait(2)
 print("script is running wait a 1 second. 😸")
 wait(1)
@@ -33,7 +33,6 @@ local nurysium_Data = nil
 local hit_Sound = nil
 local closest_Entity = nil
 local aura_Enabled = false
-local auto_curve = false
 local autoSpam_Enabled = false
 local training_mode = false
 local anti_curve_spam_Enabled = false
@@ -1203,7 +1202,7 @@ standalone = state
 	
 Window:AddToggle({
 	Title = "• Autofarm",
-	Description = "\/ Autofarms the game not 100% win rate \/",
+	Description = "\/ Autofarms the game not 100% win rate /\",
 	Tab = Main,
 	Callback = function(state)
 auto_win = state
@@ -1251,7 +1250,7 @@ local Settings = Window:AddTab({
 
 Window:AddDropdown({
 	Title = "Set Theme",
-	Description = "Set the theme of the library!",
+	Description = "Set the theme of the library! Amazing Right?",
 	Tab = Settings,
 	Options = {
 		["Light Mode"] = "Light",
@@ -1319,7 +1318,7 @@ ImageButton.MouseButton1Click:Connect(function()
 end)
 print("Loading Succesful!")
 wait(1)
-print("Credit To Rudert")
+print("Credit To Rudert 😎")
 wait(1)
 print("This Is Gonna Blow Up 💥😹")
 
