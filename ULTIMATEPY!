@@ -828,7 +828,6 @@ task.spawn(function()
                         else
                             originalParryRemote:FireServer(0, cf, unpack(fireArgs))
                         end
-                        wait(0.001) -- Tambahkan jeda untuk menghindari spam yang berlebihan
                     end
                 end)
             else
