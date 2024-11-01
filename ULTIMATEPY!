@@ -21,7 +21,7 @@ local function getTrainingBall()
 		end
 	end
 end
-local ismyautoparryspamming
+
 local local_player = Players.LocalPlayer
 local camera = workspace.CurrentCamera
 local standalone = false
@@ -41,7 +41,6 @@ local visualize_Enabled = false
 local ai_Enabled = false
 local auto_win = false
 local tp_hit = false
-local potanum = 100
 local Services = {game:GetService("AdService"),game:GetService("SocialService")}
 
 local function get_closest_entity(Object)
