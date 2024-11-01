@@ -41,7 +41,7 @@ local visualize_Enabled = false
 local ai_Enabled = false
 local auto_win = false
 local tp_hit = false
-local potanum = 200
+local potanum = 100
 local Services = {game:GetService("AdService"),game:GetService("SocialService")}
 
 local function get_closest_entity(Object)
@@ -787,6 +787,8 @@ Takentime = tick() - aura_table.hit_Time
 	end)
 end)
 
+Coba check ini , walau dia sudah false tetapi tetap ngespam.
+
 task.spawn(function()
     autospamvar = RunService.Heartbeat:Connect(function()
         -- Pre-check if auto_spam is enabled, player exists, and not in training mode
@@ -797,7 +799,6 @@ task.spawn(function()
             aura_table.last_target = nil
             ismyautoparryspamming = false
             aura_table.spam_Range = 0
-            autospamvar:Disconnect() -- Hentikan koneksi saat auto_spam dimatikan
             return
         end
 
@@ -805,41 +806,39 @@ task.spawn(function()
         if closest_Entity and workspace.Alive:FindFirstChild(closest_Entity.Name) and ((not standalone and aura_table.is_Spamming) or (standalone)) then
             local playerPosition = local_player.Character.PrimaryPart.Position
             local entityPosition = closest_Entity.HumanoidRootPart.Position
-            local distanceToEntity = local_player:DistanceFromCharacter(entityPosition)
-            
-            -- Perform spam actions only when within range
-            if distanceToEntity <= aura_table.spam_Range then
-                ismyautoparryspamming = true
+                local distanceToEntity = local_player:DistanceFromCharacter(entityPosition)
+                -- Perform spam actions only when within range
+                if distanceToEntity <= aura_table.spam_Range then
+                    ismyautoparryspamming = true
 
-                -- Pre-compute values before the loop for efficiency
-                local cf = camera.CFrame
-                local randomTarget = Vector3.new(math.random(-1000, 1000), math.random(0, 1000), math.random(100, 1000))
-                local targetPosition = closest_Entity_To_mouse.HumanoidRootPart.Position
-                local fireArgs = {
-                    {[closest_Entity_To_mouse.Name] = targetPosition},
-                    {targetPosition.X, targetPosition.Y}
-                }
+                    -- Pre-compute values before the loop for efficiency
+                    local cf = camera.CFrame
+                    local randomTarget = Vector3.new(math.random(-1000, 1000), math.random(0, 1000), math.random(100, 1000))
+                    local targetPosition = closest_Entity_To_mouse.HumanoidRootPart.Position
+                    local fireArgs = {
+                        {[closest_Entity_To_mouse.Name] = targetPosition},
+                        {targetPosition.X, targetPosition.Y}
+                    }
 
-                -- Perform spamming asynchronously for speed using task.defer
-                task.defer(function()
-                    for count = 1, potanum do
-                        if auto_curve then
-                            originalParryRemote:FireServer(0, CFrame.new(cf.Position, randomTarget), unpack(fireArgs))
-                        else
-                            originalParryRemote:FireServer(0, cf, unpack(fireArgs))
+                    -- Perform spamming asynchronously for speed using task.defer
+                    task.defer(function()
+                        for count = 1, potanum do
+                            if auto_curve then
+                                originalParryRemote:FireServer(0, CFrame.new(cf.Position, randomTarget), unpack(fireArgs))
+                            else
+                                originalParryRemote:FireServer(0, cf, unpack(fireArgs))
+                            end
                         end
-                    end
-                end)
-            else
-                -- Reset spam state if out of range
-                ismyautoparryspamming = false
-            end
+                    end)
+                else
+                    -- Reset spam state if out of range
+                    ismyautoparryspamming = false
+                end
         else
             -- Reset spam state if entity is not found
             ismyautoparryspamming = false
         end
     end)
-end)
 
 local function linear_predict(a: Vector3, b: Vector3, time_volume: number)
     time_volume = math.clamp(time_volume, 0, 1)
