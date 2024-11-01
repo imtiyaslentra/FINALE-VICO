@@ -787,54 +787,106 @@ Takentime = tick() - aura_table.hit_Time
 	end)
 end)
 
+-- Enhanced Auto-Spam Function
+local autoSpam_Threshold = 20
+local speed_Check_Interval = 0.1
+local autoSpam_Detection_Threshold = 15 -- Threshold for detecting spam
+
+local function updateAutoSpamBasedOnSpeedAndDistance()
+    local self = Nurysium_Util.getBall()
+    if not self then
+        return
+    end
+
+    local ball_Velocity = self.AssemblyLinearVelocity
+    local ball_Speed = ball_Velocity.Magnitude
+    local ball_Position = self.Position
+    local player_Position = local_player.Character.PrimaryPart.Position
+    local ball_Distance = (player_Position - ball_Position).Magnitude
+
+    -- Update auto spam settings based on speed and distance
+    local min_Speed_Threshold = 20
+    local min_Distance_Threshold = 10
+
+    if ball_Speed > min_Speed_Threshold and ball_Distance < min_Distance_Threshold then
+        aura_table.is_Spamming = true
+    else
+        aura_table.is_Spamming = false
+    end
+end
+
+local function detectAutoSpam()
+    local spamCount = 0
+    while true do
+        task.wait(speed_Check_Interval)
+
+        if aura_table.is_Spamming then
+            spamCount = spamCount + 1
+            if spamCount > autoSpam_Detection_Threshold then
+                warn("Auto-Spam Detected!")
+                -- Handle detection logic (e.g., notify user, adjust settings)
+            end
+        else
+            spamCount = 0
+        end
+    end
+end
+
 task.spawn(function()
-    autospamvar = RunService.Heartbeat:Connect(function()
-        -- Pre-check if auto_spam is enabled, player exists, and not in training mode
-        if not auto_spam or not workspace.Alive:FindFirstChild(local_player.Name) or training_mode then
-            -- Reset aura table and spam states
-            aura_table.hit_Count = 0
-            aura_table.is_Spamming = false
-            aura_table.last_target = nil
-            ismyautoparryspamming = false
-            aura_table.spam_Range = 0
+    while true do
+        if is_Spamming then
+            updateAutoSpamBasedOnSpeedAndDistance()
+
+            local hit_Count = aura_table.hit_Count
+            local hit_Threshold = 2
+
+            if hit_Count > hit_Threshold then
+                aura_table.is_Spamming = true
+            end
+
+            local self = Nurysium_Util.getBall()
+            if self then
+                updateVisualizerSize(self.AssemblyLinearVelocity.Magnitude)
+            end
+        end
+        task.wait(speed_Check_Interval)
+    end
+end)
+
+-- Adaptive Auto Parry Logic
+local function predictParryPosition(ball_Position, ball_Velocity, ping)
+    local timeToImpact = (ball_Position - local_player.Character.PrimaryPart.Position).Magnitude / ball_Velocity.Magnitude
+    local predicted_Position = ball_Position + (ball_Velocity * timeToImpact)
+    return predicted_Position
+end
+
+task.spawn(function()
+    RunService.PreRender:Connect(function()
+        if not aura_Enabled then
             return
         end
 
-        -- Proceed only if closest entity is valid and in workspace
-        if closest_Entity and workspace.Alive:FindFirstChild(closest_Entity.Name) and ((not standalone and aura_table.is_Spamming) or (standalone)) then
-            local playerPosition = local_player.Character.PrimaryPart.Position
-            local entityPosition = closest_Entity.HumanoidRootPart.Position
-                local distanceToEntity = local_player:DistanceFromCharacter(entityPosition)
-                -- Perform spam actions only when within range
-                if distanceToEntity <= aura_table.spam_Range then
-                    ismyautoparryspamming = true
-
-                    -- Pre-compute values before the loop for efficiency
-                    local cf = camera.CFrame
-                    local randomTarget = Vector3.new(math.random(-1000, 1000), math.random(0, 1000), math.random(100, 1000))
-                    local targetPosition = closest_Entity_To_mouse.HumanoidRootPart.Position
-                    local fireArgs = {
-                        {[closest_Entity_To_mouse.Name] = targetPosition},
-                        {targetPosition.X, targetPosition.Y}
-                    }
-
-                    -- Perform spamming asynchronously for speed using task.defer
-                    task.defer(function()
-                        for count = 1, potanum do
-                            if auto_curve then
-                                originalParryRemote:FireServer(0, CFrame.new(cf.Position, randomTarget), unpack(fireArgs))
-                            else
-                                originalParryRemote:FireServer(0, cf, unpack(fireArgs))
+        if closest_Entity then
+            local entity_root = Workspace:FindFirstChild('Alive'):FindFirstChild(closest_Entity.Name)
+            if entity_root and entity_root:FindFirstChild('Humanoid') and entity_root.Humanoid.Health > 0 then
+                if aura_table.is_Spamming then
+                    if local_player:DistanceFromCharacter(closest_Entity.HumanoidRootPart.Position) <= aura_table.spam_Range then
+                        if parry_remote then
+                            local target_position = closest_Entity.HumanoidRootPart.Position
+                            if getgenv().antiCurve_Enabled then
+                                target_position = camera.CFrame.Position + (target_position - camera.CFrame.Position).Unit * (local_player:DistanceFromCharacter(target_position) - 5)
                             end
+                            parry_remote:FireServer(
+                                0.5,
+                                CFrame.new(camera.CFrame.Position, Vector3.zero),
+                                {[closest_Entity.Name] = target_position},
+                                {target_position.X, target_position.Y},
+                                false
+                            )
                         end
-                    end)
-                else
-                    -- Reset spam state if out of range
-                    ismyautoparryspamming = false
+                    end
                 end
-        else
-            -- Reset spam state if entity is not found
-            ismyautoparryspamming = false
+            end
         end
     end)
 
